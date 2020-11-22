@@ -13,17 +13,17 @@
 
 struct node{
     void* data;
-    struct node *next
+    struct node *next;
 };
 
-typedef struct stack_type *Stack{
-    struct node top*
+struct stack_type{
+    struct node *top;
 };
 
 
 Stack Stack_create(void){
 
-    Stack s = malloc(sizeof(struct style_type));
+    Stack s = malloc(sizeof(stack_type)); //cant use size of for incomplete types
     if (s == NULL){
         printf("Error in create: stack could not be created.");
         exit(EXIT_FAILURE); 
