@@ -50,6 +50,7 @@ bool Stack_is_empty(Stack s){
 
 void * Stack_pop(Stack s){
     struct node *old_top;
+    void* i;
     if(Stack_is_empty(s)){
         printf("error in pop, stack is empty\n"); //stack empty cannot pop
         exit(EXIT_FAILURE); //return failure
@@ -65,7 +66,7 @@ void * Stack_pop(Stack s){
 void Stack_make_empty(Stack s){
 
     while(!Stack_is_empty(s)){ //while still items in the stack use pop to remove them all
-        pop(s);
+        Stack_pop(s);
     }
 
 }
@@ -81,7 +82,7 @@ bool Stack_is_full(Stack s){
 
 }
 
-void Stack_push(Stack s, void * i){
+void Stack_push(Stack s, void *i){
 
     struct node *new_node = malloc(sizeof(struct node)); //allocate space for the node to be pushed
     if(new_node == NULL){
