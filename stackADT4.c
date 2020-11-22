@@ -21,12 +21,18 @@ struct stack_type{
 };
 
 
+
+
+static void terminate(const char *message){
+    printf("%s\n", message);
+    exit(EXIT_FAILURE);
+}
+
 Stack Stack_create(void){
 
-    Stack s = malloc(sizeof(void*)); //cant use size of for incomplete types
+    Stack s = malloc(sizeof(struct stack_type)); //cant use size of for incomplete types
     if (s == NULL){
-        printf("Error in create: stack could not be created.");
-        exit(EXIT_FAILURE); 
+        terminate("Error in create: stack could not be created.\n");
     }
     s->top = NULL;
     return s;
@@ -35,13 +41,19 @@ Stack Stack_create(void){
 
 void Stack_destroy(Stack s){
     Stack_make_empty(s); //take everything out of stack
+    //free(s->top);
     free(s); //free the space for it 
 }
 
 
 bool Stack_is_empty(Stack s){
 
-    return s->top == NULL; //is the top of the stack is full there are no entries in the stack
+
+    //if(Stack_pop(s) != NULL){
+   //     return 1;
+    //}
+    //return 0;
+    return s->top == NULL; //is the top of the stack is null there are no entries in the stack
 
 }
 
@@ -52,25 +64,53 @@ void * Stack_pop(Stack s){
     struct node *old_top;
     void* i;
     if(Stack_is_empty(s)){
-        printf("error in pop, stack is empty\n"); //stack empty cannot pop
-        exit(EXIT_FAILURE); //return failure
+     //   i = NULL:
+    //    return i;
+        terminate("error in pop, stack is empty\n"); //stack empty cannot pop
+        
     }
+    //if (s->top = NULL){
+   //     i = NULL;
+   //     return i;
+   // }
+    //else {
+
+    
     old_top = s->top; //set one to be poped to old top
     i = old_top->data; //copy old_tops data to be returned
     s->top = old_top->next; //set top to next to remove old-top from linked list
     free(old_top); //free the allocated space for it
     return i; //return tops data
-
+   // }
 }
+
+
 
 void Stack_make_empty(Stack s){
+   // void* i;
+   // if (Stack_is_empty(s)){
+    //    free(s->top);
+    //}
 
-    while(!Stack_is_empty(s)){ //while still items in the stack use pop to remove them all
+    //do{
+   //     Stack_pop(s);
+   // }
+    while(!Stack_is_empty(s)){
         Stack_pop(s);
     }
+    
+     //while still items in the stack use pop to remove them all
+        //Stack_pop(s);
+       // if(s->top->next == NULL ){
+       //     free(s->top);
+       // }
+    //}
+    
+   // if(Stack_is_empty){
+   //     terminate("stack is empty\n");
+  //  }
 
 }
-
 
 
 
@@ -86,14 +126,12 @@ void Stack_push(Stack s, void *i){
 
     struct node *new_node = malloc(sizeof(struct node)); //allocate space for the node to be pushed
     if(new_node == NULL){
-        printf("error new node is NULL\n"); //if malloc returns null error occured
-        exit(EXIT_FAILURE); //return failure
+        //free(new_node);
+        terminate("error new node is NULL\n"); //if malloc returns null error occured
     }
-
     new_node->data = i; //set the new nodes data to given data
     new_node->next = s->top; //chain newnode to front of the list
     s->top = new_node; //assign top to newly added node
-
 }
 
 
