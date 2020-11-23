@@ -63,23 +63,27 @@ bool Stack_is_empty(Stack s){
 void * Stack_pop(Stack s){
     struct node *old_top;
     void* i;
+    
+    
+    
+    
     if(Stack_is_empty(s)){
-     //   i = NULL:
-    //    return i;
+        //i = NULL:
+        free(s->top);
         terminate("error in pop, stack is empty\n"); //stack empty cannot pop
         
-    }
-    //if (s->top = NULL){
-   //     i = NULL;
-   //     return i;
-   // }
-    //else {
+      }
+
+    //i = s->top->data;
 
     
     old_top = s->top; //set one to be poped to old top
-    i = old_top->data; //copy old_tops data to be returned
+    i = s->top->data; //copy old_tops data to be returned
     s->top = old_top->next; //set top to next to remove old-top from linked list
+    //old_top->next = NULL;
+    //free(old_top->data);
     free(old_top); //free the allocated space for it
+    
     return i; //return tops data
    // }
 }
@@ -96,8 +100,15 @@ void Stack_make_empty(Stack s){
    //     Stack_pop(s);
    // }
     while(!Stack_is_empty(s)){
+        //Stack_pop(s);
+        //if(s->top == NULL){
+         //  free(s->top);
+       // }
         Stack_pop(s);
     }
+
+
+
     
      //while still items in the stack use pop to remove them all
         //Stack_pop(s);
@@ -115,8 +126,6 @@ void Stack_make_empty(Stack s){
 
 
 
-
-
 bool Stack_is_full(Stack s){
     return false; //stack is never full bc we are using a linked list 
 
@@ -129,9 +138,14 @@ void Stack_push(Stack s, void *i){
         //free(new_node);
         terminate("error new node is NULL\n"); //if malloc returns null error occured
     }
+    if(s->top == NULL){
+        new_node->data = i;
+        new_node->next = NULL;
+        s->top = new_node;
+    }
+    else{
     new_node->data = i; //set the new nodes data to given data
     new_node->next = s->top; //chain newnode to front of the list
     s->top = new_node; //assign top to newly added node
+    }
 }
-
-
